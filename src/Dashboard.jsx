@@ -26,24 +26,6 @@ export default function Dashboard({ onBack }) {
     }
   }, [isDark])
 
-  // Poll ESP32 sensor every 0.5s
-  useEffect(() => {
-    if (demoMode || !selectedPatient) return;
-
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch("https://10.187.236.5/status")
-        const data = await res.json();
-        console.log(data);
-        fetchData(data) // update context/state for all components
-      } catch (err) {
-        console.error("Error fetching sensor data:", err)
-      }
-    }, 500)
-
-    return () => clearInterval(interval)
-  }, [selectedPatient, demoMode])
-
   // Update alerts based on sensor data
   useEffect(() => {
     if (demoMode || !patientData) return;
